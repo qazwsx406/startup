@@ -1,5 +1,7 @@
 # CS 260 Notes
+These are my notes for CS260
 
+# Github Repository Assignment
 I have learned how to use basic git commands.  
 https://git-school.github.io/visualizing-git/  
 This website was really helpful in visualizing what happens which each command
