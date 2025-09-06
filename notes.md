@@ -10,5 +10,5 @@ This website was really helpful in visualizing what happens which each command
 It seems like for some reason windows powershell doesn't work well when trying to ssh into a server. Git bash worked, so I am sticking to that.  
 Release elastic IP !== Terminating EC2 instance
 
-## Route 63 Domain
-I have learned how to purchase and register a domain on Route 63. Nothing was too difficult here. Pretty straightforward.
+## Route 53 Domain
+I have learned how to purchase and register a domain on Route 53. Nothing was too difficult here. Pretty straightforward.
