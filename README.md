@@ -1,36 +1,26 @@
-# Your startup name here
+# HotTakes
 
 [My Notes](notes.md)
 
-A brief description of the application here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-> [!NOTE]
->  This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
-
-> [!NOTE]
->  If you are not familiar with Markdown then you should review the [documentation](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) before continuing.
+"Hot Takes" is a social polling application designed for sharing and reacting to controversial opinions with straightforward, punchy engagement. Users can effortlessly post their own provocative statements, which are then presented to the community for a quick verdict. Each hot take features two distinct interaction buttons: "Bet" for agreement and "Ain't no way" for disagreement, dynamically enhanced with a random, sentiment-appropriate GIF to visually amplify the user's choice. Vote counts update in real-time, offering instant feedback on the community's collective stance, making "Hot Takes" an efficient and entertaining platform for lively, opinion-driven interaction
 
 ## 🚀 Specification Deliverable
 
-> [!NOTE]
->  Fill in this sections as the submission artifact for this deliverable. You can refer to this [example](https://github.com/webprogramming260/startup-example/blob/main/README.md) for inspiration.
-
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
-- [ ] Description of key features
-- [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] Proper use of Markdown
+- [x] A concise and compelling elevator pitch
+- [x] Description of key features
+- [x] Description of how you will use each technology
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+"Hot Takes is the super-fast way to settle debates! Post your most controversial opinions, then see them immediately voted on by the community with simple 'Bet' or 'Ain't no way' buttons. It's quick, visually engaging, and gets straight to the point – just pure, unfiltered opinion battles. Ready to see if your hot take is a hit or a miss?"
 
 ### Design
 
-![Design image](placeholder.png)
+![Design image](wireframe.png)
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -43,20 +33,23 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Hot Take Submission: Users can easily submit their own controversial opinions via a dedicated input area on the home page.
+- Opinion Polling: Each hot take features two clear interaction buttons—"Bet" (to agree) and "Ain't no way" (to disagree)—for users to cast their vote.
+- Real-time Vote Counts: Numerical tallies for both "Bet" and "Ain't no way" are displayed immediately, showing the current community sentiment.
+- User Identification: Every hot take is attributed to a specific username and includes a timestamp to indicate when it was posted.
+- Personal "My Takes" Feed: A dedicated section allows users to view and track all the hot takes they have personally submitted.
+- User Authentication: A 'Log Out' option signifies a user account system for personalized and secure access to the application.
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Structures the application with two main pages: a dedicated login page and the primary voting page.
+- **CSS** - Styles the application for a responsive, visually appealing, and accessible user interface.
+- **React** - Builds the interactive frontend, managing both the separate login page and the voting interface. It displays hot takes, handles votes, and updates vote counts in real-time.
+- **Service** - Provides API endpoints for user login, submitting new hot takes, retrieving existing hot takes, submitting user votes, and getting vote tallies
+- **DB/Login** - Stores all application data (users, takes, votes) and manages secure user login; viewing, posting and voting hot takes requires authentication.
+- **WebSocket** - Ensures real-time updates of vote counts across all active users.
 
 ## 🚀 AWS deliverable
 
