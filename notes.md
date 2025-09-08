@@ -15,4 +15,7 @@ I have learned how to purchase and register a domain on Route 53. Nothing was to
 
 ## Caddy and HTTPS Enable
 For some reason, apt update && upgrade breaks something in the configuration. The default caddy page displays when done.  
-Had to terminate pervious instance and redo everything. 
+Had to terminate pervious instance and redo everything.
+
+## HTML Structure
+Was a good reminder of HTML.
