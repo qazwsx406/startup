@@ -63,15 +63,14 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - Three HTML page that represents the ability to login/signup and post/vote.
+- [x] **Links** - The login page links to home page. The home page contains link to my post page.
+- [x] **Text** - Each posts are represented by textual description.
+- [x] **3rd party API placeholder** - GIFs and Avatars are hardcoded for now.
+- [x] **Images** - Added GIFs and Avatar images in needed places.
+- [x] **Login placeholder** - Created login/signup input fields in index.html.
+- [x] **DB data placeholder** - Hardcoded name and post date for now.
+- [x] **WebSocket placeholder** - Hardcoded vote amount for now.
 
 ## 🚀 CSS deliverable
 
