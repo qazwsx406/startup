@@ -1,6 +1,14 @@
 # CS 260 Notes
 These are my notes for CS260
 
+## Links To Submissions
+I have been working ahead and have realized that the TAs would not be able to check my work if I update the code  
+on the server. So I have decided to host several servers each displaying the expected output. Below is the link for the deliverables.
+
+ - Startup AWS: startup-aws.hottakes260.com
+    [x] HTTPS connection working correctly
+    [x] *.startup-aws.hottakes260.com working correctly
+
 ## Github Repository Assignment
 I have learned how to use basic git commands.  
 https://git-school.github.io/visualizing-git/  
