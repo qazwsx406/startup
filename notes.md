@@ -5,7 +5,7 @@ These are my notes for CS260
 I have been working ahead and have realized that the TAs would not be able to check my work if I update the code  
 on the server. So I have decided to host several servers each displaying the expected output. Below is the link for the deliverables.
 
- - Startup AWS: https://startup-aws.hottakes260.com
+ - **Startup AWS**: https://startup-aws.hottakes260.com
     - [x] HTTPS connection working correctly
     - [x] "startup" and "simon" sub-subdomains working correctly
 
