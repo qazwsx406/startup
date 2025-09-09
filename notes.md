@@ -7,7 +7,7 @@ on the server. So I have decided to host several servers each displaying the exp
 
  - Startup AWS: https://startup-aws.hottakes260.com
     - [x] HTTPS connection working correctly
-    - [x] *.startup-aws.hottakes260.com working correctly
+    - [x] "startup" and "simon" sub-subdomains working correctly
 
 ## Github Repository Assignment
 I have learned how to use basic git commands.  
