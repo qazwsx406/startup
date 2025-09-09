@@ -12,7 +12,7 @@ on the server. So I have decided to host several servers each displaying the exp
 
  - **Startup HTML**: https://startup-html.hottakes260.com
     - [x] "startup" and "simon" sub-subdomains working correctly
-    - [x] "startup" html code deployed correctly using provided script
+    - [x] "startup" and "simon" html code deployed correctly using provided script
     - [x] html formatted to display app pages
 
 ## Github Repository Assignment
