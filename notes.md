@@ -7,7 +7,13 @@ on the server. So I have decided to host several servers each displaying the exp
 
  - **Startup AWS**: https://startup-aws.hottakes260.com
     - [x] HTTPS connection working correctly
+    - [x] custom domain setup complete
     - [x] "startup" and "simon" sub-subdomains working correctly
+
+ - **Startup HTML**: https://startup-html.hottakes260.com
+    - [x] "startup" and "simon" sub-subdomains working correctly
+    - [x] "startup" html code deployed correctly using provided script
+    - [x] html formatted to display app pages
 
 ## Github Repository Assignment
 I have learned how to use basic git commands.  
