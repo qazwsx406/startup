@@ -57,11 +57,12 @@ I am going to use the required technologies in the following ways.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - [My server link](https://startup-aws.hottakes260.com).
 
 ## 🚀 HTML deliverable
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.  
+[My server link](https://startup.startup-html.hottakes260.com)
 
 - [x] **HTML pages** - Three HTML page that represents the ability to login/signup and post/vote.
 - [x] **Links** - The login page links to home page. The home page contains link to my post page.
