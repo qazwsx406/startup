@@ -35,3 +35,6 @@ Had to terminate pervious instance and redo everything.
 
 ## HTML Structure
 Was a good reminder of HTML.
+
+## CSS
+Looked through CSS of Simon. Was a good reminder of CSS.
