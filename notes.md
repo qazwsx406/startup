@@ -15,6 +15,11 @@ on the server. So I have decided to host several servers each displaying the exp
     - [x] "startup" and "simon" html code deployed correctly using provided script
     - [x] html formatted to display app pages
 
+ - **Startup CSS**: https://startup.hottakes260.com
+    - [x] "startup" and "simon" sub-subdomains working correctly
+    - [x] "startup" and "simon" css styling deployed correctly using provided script
+    - [x] used tailwind to apply styling
+
 ## Github Repository Assignment
 I have learned how to use basic git commands.  
 https://git-school.github.io/visualizing-git/  

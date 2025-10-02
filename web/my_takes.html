@@ -5,76 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
 </head>
     <body>
-        <header>
-            <div class="header-left">
-                <a class="navbar-name" href="main_feed.html">HotTakes</a>
+        <header class="flex justify-between items-center px-5 h-16 border-y-2 bg-[#ff4d4d]">
+            <div class="flex items-center gap-10">
+                <a class="font-bold text-2xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,5)]" href="main_feed.html">HotTakes</a>
                 <nav>
-                    <menu>
-                        <li><a href="main_feed.html">Home</a></li>
-                        <li><a href="my_takes.html" class="active">My Takes</a></li>
+                    <menu class="flex gap-2">
+                        <li><a class="text-white font-medium" href="main_feed.html">Home</a></li>
+                        <li><a class="text-white underline font-medium" href="my_takes.html">My Takes</a></li>
                     </menu>
                 </nav>
             </div>
 
-            <div class="header-right">
-                <button>Logout</button>
+            <div>
+                <a class="bg-[#D9D9D9] border-2 text-black w-full rounded-lg px-4 py-0.5 font-medium" href="index.html">Logout</a>
             </div>
         </header>
 
         <main>
-            <hr />
-            <div>
-                <form>
-                    <div>
-                        <img src="assets/images/profile_1.svg" width="50">
-                        <span>Joonhee Shin</span>
+            <!-- <div id="user-input-element" class="bg-white px-10 py-6 border-2 mb-16 rounded-lg w-full sm:w-[90%] md:w-[80%] lg:w-[55%]">
+                <form class="flex flex-col gap-5">
+                    <div class="flex items-center gap-3">
+                        <img class="rounded-[100%] border-2 border-black" src="assets/images/profile_1.svg" width="50">
+                        <div class="font-semibold text-lg">Joonhee Shin</div>
                     </div>
-                    <input type="text" placeholder="what's your controversial hot take?" />
-                    <br />
-                    <button type="submit">Let the debates begin...</button>
+                    <textarea class="bg-white w-full h-full rounded-md px-4 py-2 border-solid border-2" placeholder="what's your controversial hot take?"></textarea>
+
+                    <button class="bg-[#4dffbc] border-2 border-black text-black w-full rounded-lg p-2 font-medium" type="submit">Let the debates begin...</button>
                 </form>
+            </div> -->
+            <div class="text-2xl mb-[60px] mt-[30px] font-semibold w-full sm:w-[90%] md:w-[80%] lg:w-[55%]">
+                <div class="bg-white p-3 border-2 rounded-lg w-fit drop-shadow-[7px_7px_0.5px_rgba(0,0,0,0.3)]">My Takes</div>
+                <div></div>
             </div>
-            <hr />
-            <br />
-            <hr />
-            <div>
-                <div>
-                    <span><img src="assets/images/profile_1.svg" width="50"></span>
-                    <span>
-                        <span>Joonhee Shin</span>
-                        <br />
-                        <span>09.08.25</span>
-                    </span>
-                </div>
-                <h3>"Eating cereal with a fork is actually superior because it lets you save all the milk for a glorious final sip."</h3>
-                <div>
-                    <div>
-                        <span>Bet.</span>
-                        <br />
-                        <span>2</span>
-                        <br />
-                        <img src="assets/images/agree_3.gif" width="150">
+
+            <div id="feed-container" class="flex flex-col w-full sm:w-[90%] md:w-[80%] lg:w-[55%] gap-5">
+                <div class="bg-white border-2 rounded-lg drop-shadow-[10px_10px_0.5px_rgba(0,0,0,0.3)]">
+                    <div class="flex flex-col gap-3 p-7">
+                        <div class="flex gap-3">
+                            <img class="rounded-[100%] border-2 border-black" src="assets/images/profile_1.svg" width="50">
+                            <div>
+                                <div class="font-semibold">Joonhee Shin</div>
+                                <div class="text-sm font-semibold text-[#898989]">09.08.25</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col italic items-center my-6 mx-10 py-16 border-y-2">
+                            <h3 class="text-2xl  text-center w-[80%]">"Eating cereal with a fork is actually superior because it lets you save all the milk for a glorious final sip."</h3>
+                        </div>
                     </div>
-                    <div>
-                        <span>Ain't no way</span>
-                        <br />
-                        <span>17</span>
-                        <br />
-                        <img src="assets/images/disagree_3.gif" width="150">
+                    
+                    <div id="vote-button" class="border-t-2 rounded-b-lg">
+                        <div class="flex h-52 rounded-b-lg">
+                            <div class="flex flex-col justify-between items-center w-full border-r-2 p-3 rounded-bl-md bg-[#4dffbc]">
+                                
+                                <div class="flex justify-between gap-5 w-full">
+                                    <div class="w-1 p-3"></div>
+                                    <div class="text-2xl font-semibold">Bet.</div>
+                                    <div class="flex items-center justify-center bg-white h-1 w-1 p-3 border-2 rounded-[100%]">
+                                        <div class="text-sm font-bold">2</div>
+                                    </div>
+                                </div>
+
+                                <img class="h-[65%] border-2 rounded-2xl" src="assets/images/agree_3.gif" >
+                                
+                                <div></div>
+                            </div>
+                            
+                            <div class="flex flex-col justify-between items-center w-full p-3 rounded-br-md bg-[#ff4d4d]">
+                                <div class="flex justify-between gap-5 w-full">
+                                    <div class="w-1 p-3"></div>
+                                    <div class="text-2xl font-semibold text-white drop-shadow-[2px_3px_0px_rgba(0,0,0,5)]">Aint No Way</div>
+                                    <div class="flex items-center justify-center bg-white h-1 w-1 p-3 border-2 rounded-[100%]">
+                                        <div class="text-sm font-bold">17</div>
+                                    </div>
+                                </div>
+                            
+                                <img class="h-[65%] border-2 rounded-2xl" src="assets/images/disagree_3.gif" >
+                                <div></div>
+                            </div>
+                        </div>                        
                     </div>
                 </div>
+            
             </div>
-            <hr />
         </main>
 
-        <footer>
+        <footer class="flex justify-between border-y-2 px-5 py-3 bg-[#FF4D4D]">
             <div class="footer-left">
-                <a>Joonhee Shin</a>
+                <a class="text-white drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]">Joonhee Shin</a>
             </div>
             <div class="footer-right">
-                <a href="https://github.com/qazwsx406/startup">GitHub</a>
+                <a class="text-white font-semibold drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]" href="https://github.com/qazwsx406/startup">GitHub</a>
             </div>            
         </footer>
     </body>

@@ -5,44 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HotTakes Sign In</title>
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-      crossorigin="anonymous"
-    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
 </head>
     <body>
-        <header>
-            <div class="header-left">
-                <a class="navbar-name" href="/">HotTakes</a>
+        <header class="flex items-center px-5 h-16 border-y-2 bg-[#ff4d4d]">
+            <div class="">
+                <a class="font-bold text-2xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,5)]" href="/">HotTakes</a>
             </div>
-            
         </header>
 
         <main>
-            <h2>Let the Debates Begin</h2>
-            <!-- <p>Welcome to HotTakes! Login/Signup below to post your most controversial takes.</p> -->
-            <form method="get" action="main_feed.html">
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Email: </span>
-                    <input type="text" placeholder="email here" />
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">PWD: </span>
-                    <input type="password" placeholder="password" />
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <button type="submit" class="btn btn-secondary">Signup</button>
-            </form>
+            <div class="flex flex-col bg-white rounded-lg p-15 max-w-md border-solid border-3 drop-shadow-[10px_10px_0px_rgba(0,0,0,0.3)]">
+                <p class="text-3xl font-bold text-center">Let the Debates Begin</p>
+                <p class="text-center my-3">Welcome to HotTakes! Login/Signup below to post your most controversial takes.</p>
+                <form method="get" action="main_feed.html">
+                    <div class="flex flex-col gap-5 my-10">
+                        <div>
+                            <input class="bg-white w-full rounded-md px-4 py-2 border-solid border-2" type="text" placeholder="email here" />
+                        </div>
+                        <div>
+                            <input class="bg-white w-full rounded-md px-4 py-2 border-solid border-2" type="password" placeholder="password" />
+                        </div>
+                    </div>
+                    <div class="flex justify-between gap-3">
+                        <button class="bg-[#ff4d4d] border-2 border-black text-white w-full rounded-lg p-2 font-medium" type="submit">Signup</button>
+                        <button class="bg-[#4dffbc] border-2  text-black w-full rounded-lg p-2 font-medium" type="submit">Login</button>
+                    </div>
+                </form>                
+            </div>
+
         </main>
 
-        <footer>
+        <footer class="flex justify-between border-y-2 px-5 py-3 bg-[#FF4D4D]">
             <div class="footer-left">
-                <a>Joonhee Shin</a>
+                <a class="text-white drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]">Joonhee Shin</a>
             </div>
             <div class="footer-right">
-                <a href="https://github.com/qazwsx406/startup">GitHub</a>
+                <a class="text-white font-semibold drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]" href="https://github.com/qazwsx406/startup">GitHub</a>
             </div>            
         </footer>
     </body>

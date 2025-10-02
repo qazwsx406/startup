@@ -5,23 +5,11 @@ html {
 body {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   min-height: 100%;
-  min-width: 375px;
+  /* min-width: 375px; */
   margin: 0px;
   background-color: #D9D9D9 !important;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  background-color: #FF4D4D;
-  padding: 0 30px;
-  min-height: 80px;
 }
 
 main {
@@ -30,10 +18,13 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 50px
+  padding-top: 30px;
+  padding-bottom: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-menu {
+/* menu {
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -51,61 +42,8 @@ menu li a.active{
   text-decoration: underline;
 }
 
-button {
-  margin: 0px;
-}
-
-footer {
-  display: flex;
-  justify-content: space-between;
-  background-color: #FF4D4D;
-  padding: 0 30px;
-  min-height: 50px;
-}
-
-.footer-left {
-  display: flex;
-  align-items: center;
-  color: white;
-}
-
-.footer-right {
-  display: flex;
-  align-items: center;
-  color: white;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-}
-
-.navbar-name {
-  text-decoration: none;
-  font-weight: 800;
-  font-size: x-large;
-  color: white;
-}
-
-
-
-footer a {
-  color: white;
-}
-
-/* @media (max-height: 600px) {
-  header {
-    display: none;
-  }
-  footer {
-    display: none;
-  }
-  main {
-    flex: 1 100vh;
-  }
+menu li a:hover{
+  padding-right: 10px;
+  color: white !important;
+  text-decoration: underline;
 } */
