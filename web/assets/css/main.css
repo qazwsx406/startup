@@ -39,13 +39,37 @@ menu {
   list-style: none;
 }
 
-menu li {
+menu li a{
   padding-right: 10px;
   color: #D9D9D9;
 }
 
+menu li a.active{
+  padding-right: 10px;
+  color: white;
+  text-decoration: underline;
+}
+
 button {
   margin: 0px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  background-color: #FF4D4D;
+  padding: 0 30px;
+  min-height: 50px;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
 }
 
 .header-left {
@@ -65,8 +89,10 @@ button {
   color: white;
 }
 
+
+
 footer a {
-  float: right;
+  color: white;
 }
 
 /* @media (max-height: 600px) {
