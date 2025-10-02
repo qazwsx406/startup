@@ -75,7 +75,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ## 🚀 CSS deliverable
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.  
 [My server link](https://startup.hottakes260.com)
 
 - [x] **Header, footer, and main content body** - I completed this part of the deliverable.
