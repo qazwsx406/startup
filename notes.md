@@ -43,3 +43,7 @@ Was a good reminder of HTML.
 
 ## CSS
 Looked through CSS of Simon. Was a good reminder of CSS.
+
+## Vite
+Had trouble with styling because of this change:  
+<body> → <div id="root"> → Your App's <div> → (<header>, <main>, <footer>)  
