@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function my_takes() {
+export function MyTakes() {
   return (
     <main className="container-fluid bg-secondary text-center">
       <div>my_takes displayed here</div>
