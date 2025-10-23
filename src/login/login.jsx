@@ -4,13 +4,13 @@ import { AuthState } from './authState';
 import { useNavigate } from 'react-router-dom';
 
 export function Login({userSession, authState, setAuthState, setUserSession}) {
-    const [userName, setUserName] = React.useState();
-    const [password, setPassword] = React.useState();
+    const [userName, setUserName] = React.useState(null);
+    const [password, setPassword] = React.useState(null);
     const [showError, setShowError] = React.useState(null);
     const navigate = useNavigate();
 
     async function loginUser(userName, password) {
-        if (userSession["name"] === userName && userSession["pwd"] === password) {
+        if (userName && userSession && userSession["name"] === userName && userSession["pwd"] === password) {
             console.log("success")
             const newUserSession = {
                 "name": userName,
@@ -31,15 +31,17 @@ export function Login({userSession, authState, setAuthState, setUserSession}) {
     }
 
     async function createUser(userName, password) {
-        const currentUserSession = {
-            "name": userName,
-            "pwd": password,
-            "auth": true
+        if (userName && password) {
+            const currentUserSession = {
+                "name": userName,
+                "pwd": password,
+                "auth": true
+            }
+            localStorage.setItem("userSession", JSON.stringify(currentUserSession))
+            setAuthState(AuthState.Authenticated)
+            setUserSession(currentUserSession)
+            navigate('/main_feed')
         }
-        localStorage.setItem("userSession", JSON.stringify(currentUserSession))
-        setAuthState(AuthState.Authenticated)
-        setUserSession(currentUserSession)
-        navigate('/main_feed')
     }
 
     return (
