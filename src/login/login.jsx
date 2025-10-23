@@ -1,8 +1,10 @@
 import React from 'react';
 import { MainFeed } from '../main_feed/main_feed';
 
-export function Login() {
-  return (
+export function Login({userSession, authState, setAuthState, setUserSession}) {
+  
+  
+    return (
     <main>
         <div className="flex flex-col bg-white rounded-lg p-15 max-w-md border-solid border-3 drop-shadow-[10px_10px_0px_rgba(0,0,0,0.3)]">
             <p className="text-3xl font-bold text-center">Let the Debates Begin</p>
