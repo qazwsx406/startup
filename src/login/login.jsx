@@ -1,26 +1,30 @@
 import React from 'react';
 import { MainFeed } from '../main_feed/main_feed';
 import { AuthState } from './authState';
+import { useNavigate } from 'react-router-dom';
 
 export function Login({userSession, authState, setAuthState, setUserSession}) {
     const [userName, setUserName] = React.useState();
     const [password, setPassword] = React.useState();
-    const [showError, setShowError] = React.useState();
-    
+    const [showError, setShowError] = React.useState(null);
+    const navigate = useNavigate();
+
     async function loginUser(userName, password) {
         if (userSession["name"] === userName && userSession["pwd"] === password) {
+            console.log("success")
             const newUserSession = {
-                "name": {userName},
-                "pwd": {password},
-                "auth": true                
+                "name": userName,
+                "pwd": password,
+                "auth": true
             }
             localStorage.setItem("userSession",JSON.stringify(newUserSession))
             setUserSession(newUserSession)
             setAuthState(AuthState.Authenticated)
+            navigate('/main_feed')
         } else if (userSession["name"] !== userName) {
-            setShowError(<>Username: {userName} does not exist, Sign up if you are a new user!</>)
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>User <span className='text-sm font-normal text-black underline italic'>{userName}</span> does not exist, Sign up if you are new here!</p>)
         } else if (userSession["pwd"] !== password) {
-            setShowError(<>Incorrect password :( try again.</>)
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>Incorrect password :(</p>)
         } else {
             setShowError(<>Unknown Error...</>)
         }
@@ -35,6 +39,7 @@ export function Login({userSession, authState, setAuthState, setUserSession}) {
         localStorage.setItem("userSession", JSON.stringify(currentUserSession))
         setAuthState(AuthState.Authenticated)
         setUserSession(currentUserSession)
+        navigate('/main_feed')
     }
 
     return (
@@ -44,6 +49,7 @@ export function Login({userSession, authState, setAuthState, setUserSession}) {
             <p className="text-center my-3 mt-8">Welcome to HotTakes! Login/Signup below to post your most controversial takes.</p>
             <form>
                 <div className="flex flex-col gap-5 my-10">
+                    {showError && (<>{showError}</>)}
                     <div>
                         <input className="bg-white w-full rounded-md px-4 py-2 border-solid border-2" type="text" placeholder="email here" onChange={(e) => setUserName(e.target.value)} />
                     </div>
@@ -53,7 +59,7 @@ export function Login({userSession, authState, setAuthState, setUserSession}) {
                 </div>
                 <div className="flex justify-between gap-3">
                     <button className="bg-[#ff4d4d] border-2 border-black text-white w-full rounded-lg p-2 font-medium" type="button" onClick={() => createUser(userName, password)}>Signup</button>
-                    <button className="bg-[#4dffbc] border-2  text-black w-full rounded-lg p-2 font-medium" type="button" onClick={() => loginUser(userName, password, userSession)}>Login</button>
+                    <button className="bg-[#4dffbc] border-2  text-black w-full rounded-lg p-2 font-medium" type="button" onClick={() => loginUser(userName, password)}>Login</button>
                 </div>
             </form>                
         </div>
