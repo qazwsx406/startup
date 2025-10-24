@@ -1,0 +1,24 @@
+[
+    {
+        "name": "James Bond",
+        "date": "2025-09-09",
+        "field": "The 'reply all' button on emails is a menace to society and should only be accessible via a three-factor authentication system.",
+        "agree": 24,
+        "disagree": 11
+    },
+    {
+        "name": "Luke Skywalker",
+        "date": "2025-09-08",
+        "field": "Pineapple on pizza is actually fine.",
+        "agree": 4,
+        "disagree": 17
+    },
+    {
+        "name": "Joonhee Shin",
+        "date": "2025-09-05",
+        "field": "Eating cereal with a fork is actually superior because it lets you save all the milk for a glorious final sip",
+        "agree": 2,
+        "disagree": 17
+    }
+
+]

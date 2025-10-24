@@ -1,46 +1,48 @@
 import React from 'react';
-import { MainFeed } from '../main_feed/main_feed';
 import { AuthState } from './authState';
 import { useNavigate } from 'react-router-dom';
+import { UserInfo } from './userInfo';
+import { UserSession } from './userSession';
 
-export function Login({userSession, authState, setAuthState, setUserSession}) {
+export function Login({userInfo, setAuthState, setUserInfo}) {
     const [userName, setUserName] = React.useState(null);
     const [password, setPassword] = React.useState(null);
     const [showError, setShowError] = React.useState(null);
     const navigate = useNavigate();
 
     async function loginUser(userName, password) {
-        if (userName && userSession && userSession["name"] === userName && userSession["pwd"] === password) {
-            console.log("success")
-            const newUserSession = {
-                "name": userName,
-                "pwd": password,
-                "auth": true
-            }
-            localStorage.setItem("userSession",JSON.stringify(newUserSession))
-            setUserSession(newUserSession)
+        if ((userName && password) && (userInfo["name"] === userName && userInfo["pwd"] === password)) {
+            const newUser = new UserInfo(userName, password)
+            const newUserSession = new UserSession(userName, true)
+            localStorage.setItem("userSession", JSON.stringify(newUserSession))
+            setUserInfo(newUser)
             setAuthState(AuthState.Authenticated)
             navigate('/main_feed')
-        } else if (userSession["name"] !== userName) {
+        } else if (!(userName && password)) {
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>username / password fields cannot be empty</p>)
+        } else if (userInfo["name"] !== userName) {
             setShowError(<p className='text-sm font-semibold text-red-500 text-center'>User <span className='text-sm font-normal text-black underline italic'>{userName}</span> does not exist, Sign up if you are new here!</p>)
-        } else if (userSession["pwd"] !== password) {
+        } else if (userInfo["pwd"] !== password) {
             setShowError(<p className='text-sm font-semibold text-red-500 text-center'>Incorrect password :(</p>)
         } else {
-            setShowError(<>Unknown Error...</>)
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>Unknown Error...</p>)
         }
     }
 
     async function createUser(userName, password) {
-        if (userName && password) {
-            const currentUserSession = {
-                "name": userName,
-                "pwd": password,
-                "auth": true
-            }
+        if ((userName && password) && userInfo["name"] !== userName) {
+            const currentUserInfo = new UserInfo(userName, password)
+            const currentUserSession = new UserSession(userName, true)
+            localStorage.setItem("user", JSON.stringify(currentUserInfo))
             localStorage.setItem("userSession", JSON.stringify(currentUserSession))
             setAuthState(AuthState.Authenticated)
-            setUserSession(currentUserSession)
             navigate('/main_feed')
+        } else if (!(userName && password)) {
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>username / password fields cannot be empty</p>)
+        } else if (userInfo["name"] === userName) {
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>User <span className='text-sm font-normal text-black underline italic'>{userName}</span> already exists!</p>)
+        } else {
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>Unknown Error...</p>)            
         }
     }
 

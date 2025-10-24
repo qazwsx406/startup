@@ -47,3 +47,9 @@ Looked through CSS of Simon. Was a good reminder of CSS.
 ## Vite
 Had trouble with styling because of this change:  
 <body> → <div id="root"> → Your App's <div> → (<header>, <main>, <footer>)  
+
+## React
+Definitely getting used to using useState and useEffect.  
+Had some struggle dealing with async functions, but starting to get a hang of it.  
+I should plan out how to send props to child elements before I build something.  
+Aviod prop drilling as much as possible.
