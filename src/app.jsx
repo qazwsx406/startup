@@ -6,29 +6,34 @@ import { MainFeed } from './main_feed/main_feed';
 import { MyTakes } from './my_takes/my_takes';
 import { AuthState } from './login/authState';
 import { ProtectedRoute } from './login/protected_route';
-import { UserSession } from './login/userSession';
+import { getCurrentUser, logout } from './api';
 
 export default function App() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const [userInfo, setUserInfo] = React.useState(user || {"name": null, "pwd": null, "posts": []})
-    const [userPost, setUserPost] = React.useState(user ? user.posts : []);
-    const userSessionOnPageLoad = JSON.parse(localStorage.getItem('userSession')) || {"user": null, "auth": false}
-    const userSessionStatusOnLoad = userSessionOnPageLoad["auth"] ? AuthState.Authenticated : AuthState.Unauthenticated;
-    const [authState, setAuthState] = React.useState(userSessionStatusOnLoad);
-    const [dataList, setDataList] = React.useState([]);
+    const [userInfo, setUserInfo] = React.useState(null);
+    const [authState, setAuthState] = React.useState(AuthState.Unknown);
 
     React.useEffect(() => {
-        if (authState === AuthState.Authenticated) {
-            const refreshUser = JSON.parse(localStorage.getItem('user'));
-            setUserInfo(refreshUser || {"name": null, "pwd": null})
-            setUserPost(refreshUser ? refreshUser.posts : [])
-        }
-    }, [authState])
+        // Check if the user is already authenticated on page load
+        (async function checkUser() {
+            try {
+                const user = await getCurrentUser();
+                setUserInfo(user);
+                setAuthState(AuthState.Authenticated);
+            } catch {
+                setAuthState(AuthState.Unauthenticated);
+            }
+        })();
+    }, []);
 
-    async function logOut() {
-        const logout = new UserSession(null, false)
-        localStorage.setItem("userSession", JSON.stringify(logout))
-        setAuthState(AuthState.Unauthenticated)
+    async function handleLogout() {
+        await logout();
+        setUserInfo(null);
+        setAuthState(AuthState.Unauthenticated);
+    }
+
+    // Display a loading indicator or nothing while auth state is unknown
+    if (authState === AuthState.Unknown) {
+        return null;
     }
     
     return (
@@ -49,25 +54,38 @@ export default function App() {
                     
                     <div>
                         {authState === AuthState.Authenticated && (
-                            <NavLink className="bg-[#D9D9D9] border-2 text-black w-full rounded-lg px-4 py-0.5 font-medium" onClick={() => logOut()}>Logout</NavLink>
+                            <NavLink className="bg-[#D9D9D9] border-2 text-black w-full rounded-lg px-4 py-0.5 font-medium" to="/" onClick={handleLogout}>Logout</NavLink>
                         )}
                     </div>
                 </header>
 
                 <Routes>
-                    <Route path='/' element={<Login 
-                        userInfo={userInfo}
-                        setAuthState={setAuthState}
-                        setUserInfo={setUserInfo}
-                        />} exact />
+                    <Route 
+                        path='/' 
+                        element={<Login 
+                            setAuthState={setAuthState} 
+                            setUserInfo={setUserInfo} 
+                        />}
+                        exact 
+                    />
 
-                    <Route path='/main_feed' element={<ProtectedRoute
-                        authState={authState}
-                        children={<MainFeed userInfo={userInfo} userPost={userPost} setUserInfo={setUserInfo} setUserPost={setUserPost} dataList={dataList} setDataList={setDataList}/>}/>} />
+                    <Route 
+                        path='/main_feed' 
+                        element={
+                            <ProtectedRoute authState={authState}>
+                                <MainFeed userInfo={userInfo} />
+                            </ProtectedRoute>
+                        } 
+                    />
 
-                    <Route path='/my_takes' element={<ProtectedRoute
-                        authState={authState}
-                        children={<MyTakes userPost={userPost} setUserPost={setUserPost} dataList={dataList} setDataList={setDataList} userInfo={userInfo}/>}/>} />
+                    <Route 
+                        path='/my_takes' 
+                        element={
+                            <ProtectedRoute authState={authState}>
+                                <MyTakes userInfo={userInfo} />
+                            </ProtectedRoute>
+                        } 
+                    />
 
                     <Route path='*' element={<NotFound />} />
                 </Routes>
@@ -88,4 +106,3 @@ export default function App() {
 function NotFound() {
     return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }
-

@@ -1,48 +1,48 @@
 import React from 'react';
 import { AuthState } from './authState';
 import { useNavigate } from 'react-router-dom';
-import { UserInfo } from './userInfo';
-import { UserSession } from './userSession';
+import { login, signup } from '../api'; // Import from api.js
 
-export function Login({userInfo, setAuthState, setUserInfo}) {
-    const [userName, setUserName] = React.useState(null);
-    const [password, setPassword] = React.useState(null);
+// Note: UserInfo and UserSession are no longer needed here as we are not manually managing them in localStorage
+
+export function Login({ setAuthState, setUserInfo }) { // Removed unused userInfo prop
+    const [userName, setUserName] = React.useState(''); // Default to empty string
+    const [password, setPassword] = React.useState(''); // Default to empty string
     const [showError, setShowError] = React.useState(null);
     const navigate = useNavigate();
 
     async function loginUser(userName, password) {
-        if ((userName && password) && (userInfo["name"] === userName && userInfo["pwd"] === password)) {
-            const newUser = new UserInfo(userName, password)
-            const newUserSession = new UserSession(userName, true)
-            localStorage.setItem("userSession", JSON.stringify(newUserSession))
-            setUserInfo(newUser)
-            setAuthState(AuthState.Authenticated)
-            navigate('/main_feed')
-        } else if (!(userName && password)) {
-            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>username / password fields cannot be empty</p>)
-        } else if (userInfo["name"] !== userName) {
-            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>User <span className='text-sm font-normal text-black underline italic'>{userName}</span> does not exist, Sign up if you are new here!</p>)
-        } else if (userInfo["pwd"] !== password) {
-            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>Incorrect password :(</p>)
-        } else {
-            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>Unknown Error...</p>)
+        if (!userName || !password) {
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>Email and password fields cannot be empty</p>);
+            return;
+        }
+
+        try {
+            const user = await login(userName, password);
+            // The backend now sets a cookie for the session.
+            // We just need to update the application's auth state.
+            setUserInfo({ email: user.email }); // Store user's email
+            setAuthState(AuthState.Authenticated);
+            navigate('/main_feed');
+        } catch (error) {
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>{error.message}</p>);
         }
     }
 
     async function createUser(userName, password) {
-        if ((userName && password) && userInfo["name"] !== userName) {
-            const currentUserInfo = new UserInfo(userName, password)
-            const currentUserSession = new UserSession(userName, true)
-            localStorage.setItem("user", JSON.stringify(currentUserInfo))
-            localStorage.setItem("userSession", JSON.stringify(currentUserSession))
-            setAuthState(AuthState.Authenticated)
-            navigate('/main_feed')
-        } else if (!(userName && password)) {
-            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>username / password fields cannot be empty</p>)
-        } else if (userInfo["name"] === userName) {
-            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>User <span className='text-sm font-normal text-black underline italic'>{userName}</span> already exists!</p>)
-        } else {
-            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>Unknown Error...</p>)            
+        if (!userName || !password) {
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>Email and password fields cannot be empty</p>);
+            return;
+        }
+
+        try {
+            const user = await signup(userName, password);
+            // The backend now sets a cookie for the session.
+            setUserInfo({ email: user.email });
+            setAuthState(AuthState.Authenticated);
+            navigate('/main_feed');
+        } catch (error) {
+            setShowError(<p className='text-sm font-semibold text-red-500 text-center'>{error.message}</p>);
         }
     }
 
@@ -55,17 +55,17 @@ export function Login({userInfo, setAuthState, setUserInfo}) {
                 <div className="flex flex-col gap-5 my-10">
                     {showError && (<>{showError}</>)}
                     <div>
-                        <input className="bg-white w-full rounded-md px-4 py-2 border-solid border-2" type="text" placeholder="email here" onChange={(e) => setUserName(e.target.value)} />
+                        <input className="bg-white w-full rounded-md px-4 py-2 border-solid border-2" type="text" placeholder="email here" onChange={(e) => setUserName(e.target.value)} value={userName} />
                     </div>
                     <div>
-                        <input className="bg-white w-full rounded-md px-4 py-2 border-solid border-2" type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+                        <input className="bg-white w-full rounded-md px-4 py-2 border-solid border-2" type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} value={password} />
                     </div>
                 </div>
                 <div className="flex justify-between gap-3">
                     <button className="bg-[#ff4d4d] border-2 border-black text-white w-full rounded-lg p-2 font-medium" type="button" onClick={() => createUser(userName, password)}>Signup</button>
                     <button className="bg-[#4dffbc] border-2  text-black w-full rounded-lg p-2 font-medium" type="button" onClick={() => loginUser(userName, password)}>Login</button>
                 </div>
-            </form>                
+            </form>
         </div>
     </main>
   );
