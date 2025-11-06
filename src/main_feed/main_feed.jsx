@@ -1,5 +1,5 @@
 import React from 'react';
-import { createPost as apiCreatePost, getPosts, vote } from '../api';
+import { createPost as apiCreatePost, getPosts, vote, deletePost } from '../api';
 
 export function MainFeed({ userInfo }) {
     const [posts, setPosts] = React.useState([]);
@@ -44,6 +44,16 @@ export function MainFeed({ userInfo }) {
         }
     };
 
+    const handleDelete = async (postId) => {
+        try {
+            await deletePost(postId);
+            // Filter out the deleted post from the state
+            setPosts(posts.filter(p => p.id !== postId));
+        } catch (error) {
+            console.error("Failed to delete post:", error);
+        }
+    };
+
     const getProfilePic = (postUserEmail) => {
         console.log("Generating avatar for email:", postUserEmail);
         // Generate DiceBear avatar URL using 'bots-neutral' style and user email as seed
@@ -68,12 +78,17 @@ export function MainFeed({ userInfo }) {
                     return (
                         <div key={post.id} className="bg-white border-2 rounded-lg drop-shadow-[10px_10px_0.5px_rgba(0,0,0,0.3)]">
                             <div className="flex flex-col gap-3 p-7">
-                                <div className="flex gap-3">
-                                    <img className="rounded-[100%] border-2 border-black" src={getProfilePic(post.email)} width="50" />
-                                    <div>
-                                        <div className="font-semibold">{post.email}</div>
-                                        <div className="text-sm font-semibold text-[#898989]">{new Date().toLocaleDateString()}</div>
+                                <div className="flex justify-between">
+                                    <div className="flex gap-3">
+                                        <img className="rounded-[100%] border-2 border-black" src={getProfilePic(post.email)} width="50" />
+                                        <div>
+                                            <div className="font-semibold">{post.email}</div>
+                                            <div className="text-sm font-semibold text-[#898989]">{new Date().toLocaleDateString()}</div>
+                                        </div>
                                     </div>
+                                    {userInfo.email === post.email && (
+                                        <button className="text-red-500 font-semibold text-sm w-8 h-8 rounded-full flex items-center justify-center border-2 border-red-500 hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-200" onClick={() => handleDelete(post.id)}>X</button>
+                                    )}
                                 </div>
                                 <div className="flex flex-col italic items-center my-6 mx-10 py-16 border-y-2">
                                     <h3 className="text-2xl text-center w-[80%]">{post.post}</h3>

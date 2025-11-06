@@ -41,12 +41,39 @@ export default function App() {
             <div className='main_container'>
                 <header className="flex justify-between items-center px-5 h-16 border-y-2 bg-[#ff4d4d]">
                     <div className="flex items-center gap-10">
-                        <NavLink className="font-bold text-2xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,5)]" to="">HotTakes</NavLink>
+                        <NavLink 
+                            className="font-bold text-2xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,5)]" 
+                            to={authState === AuthState.Authenticated ? "/main_feed" : "/"}
+                        >
+                            HotTakes
+                        </NavLink>
                         <nav>
                             {authState === AuthState.Authenticated && (
                                 <menu className="flex gap-2">
-                                    <li><NavLink className="text-white underline font-medium" to="main_feed">Home</NavLink></li>
-                                    <li><NavLink className="text-white font-medium" to="my_takes">My Takes</NavLink></li>
+                                    <li>
+                                        <NavLink 
+                                            className={({ isActive }) => 
+                                                isActive 
+                                                    ? "text-white underline font-medium" 
+                                                    : "text-white font-medium"
+                                            }
+                                            to="main_feed"
+                                        >
+                                            Home
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink 
+                                            className={({ isActive }) => 
+                                                isActive 
+                                                    ? "text-white underline font-medium" 
+                                                    : "text-white font-medium"
+                                            }
+                                            to="my_takes"
+                                        >
+                                            My Takes
+                                        </NavLink>
+                                    </li>
                                 </menu>
                             )}
                         </nav>

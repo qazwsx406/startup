@@ -63,3 +63,10 @@ export async function vote(postId, voteType) {
     });
     return handleResponse(response);
 }
+
+export async function deletePost(postId) {
+    const response = await fetch(`/api/posts/${postId}`, {
+        method: 'DELETE',
+    });
+    return handleResponse(response);
+}

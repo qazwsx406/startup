@@ -135,6 +135,23 @@ apiRouter.post('/posts/:id/vote', verifyAuth, async (req, res) => {
     res.send(post);
 });
 
+// Delete a post
+apiRouter.delete('/posts/:id', verifyAuth, async (req, res) => {
+    const post = await findPost(req.params.id);
+    if (!post) {
+        return res.status(404).send({ msg: 'Post not found' });
+    }
+
+    const user = await findUser('token', req.cookies[cookie]);
+    if (post.email !== user.email) {
+        return res.status(403).send({ msg: 'Forbidden' });
+    }
+
+    posts = posts.filter(p => p.id !== req.params.id);
+
+    res.status(204).end();
+});
+
 // function to find post by id
 async function findPost(id_value) {
   if (!id_value) return null;
