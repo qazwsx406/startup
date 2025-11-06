@@ -90,7 +90,7 @@ apiRouter.post('/posts', verifyAuth, async (req, res) => {
 
 // get all posts
 apiRouter.get('/posts', verifyAuth, async (req, res) => {
-  res.send(posts)
+  res.send([...posts].reverse());
 })
 
 // get post
