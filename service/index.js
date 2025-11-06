@@ -2,6 +2,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 const cookie = 'authToken';
@@ -11,6 +12,7 @@ let posts = [];
 
 app.use(express.json());
 
+app.use(cors());
 app.use(cookieParser());
 
 let apiRouter = express.Router();
