@@ -106,7 +106,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [x] **Node.js/Express HTTP service** - I have created a Node.js/Express service in `service/index.js`.
 - [x] **Static middleware for frontend** - I completed this part of the deliverable.
-- [x] **Calls to third party endpoints** - I completed this part of the deliverable.
+- [x] **Calls to third party endpoints** - I have used dicebear api to generate random profile pics for users.
 - [x] **Backend service endpoints** - I have created endpoints for user authentication, getting and creating posts, and voting.
 - [x] **Frontend calls service endpoints** - The frontend now calls the backend service endpoints for all data operations.
 - [x] **Supports registration, login, logout, and restricted endpoint** - I have implemented registration, login, logout, and restricted endpoints using middleware.
