@@ -105,7 +105,7 @@ export function MainFeed({ userInfo }) {
                                                 <div className="text-sm font-bold">{post.agree.length}</div>
                                             </div>
                                         </div>
-                                        <img className="h-[65%] border-2 rounded-2xl" src={"agree_1.gif"} />
+                                        <img className="h-[65%] border-2 rounded-2xl" src={post.agreeGifUrl} />
                                         <div></div>
                                     </div>
                                     
@@ -117,7 +117,7 @@ export function MainFeed({ userInfo }) {
                                                 <div className="text-sm font-bold">{post.disagree.length}</div>
                                             </div>
                                         </div>
-                                        <img className="h-[65%] border-2 rounded-2xl" src={"disagree_1.gif"} />
+                                        <img className="h-[65%] border-2 rounded-2xl" src={post.disagreeGifUrl} />
                                         <div></div>
                                     </div>
                                 </div>                        

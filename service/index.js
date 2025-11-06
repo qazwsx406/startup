@@ -13,7 +13,10 @@ let posts = [];
 app.use(express.json());
 
 app.use(cors());
+
 app.use(cookieParser());
+
+app.use(express.static('public'));
 
 let apiRouter = express.Router();
 app.use(`/api`, apiRouter);
@@ -152,6 +155,47 @@ apiRouter.delete('/posts/:id', verifyAuth, async (req, res) => {
     res.status(204).end();
 });
 
+// Giphy API endpoint
+apiRouter.get('/gifs/random', async (req, res) => {
+  try {
+    const { type } = req.query;
+    const gifUrl = await getRandomGiphyGif(type);
+    if (gifUrl) {
+      res.send({ gifUrl });
+    } else {
+      res.status(404).send({ msg: 'No GIFs found for the given type.' });
+    }
+  } catch (error) {
+    console.error('Error fetching GIF from Giphy:', error);
+    res.status(500).send({ msg: 'Failed to fetch GIF.', error: error.message });
+  }
+});
+
+// Helper function to get a random Giphy GIF
+async function getRandomGiphyGif(type) {
+  const giphyApiKey = '';
+  const searchTerm = type === 'agree' ? 'agree' : 'disagree';
+  const giphyUrl = `https://api.giphy.com/v1/gifs/search?api_key=${giphyApiKey}&q=${searchTerm}&limit=50&rating=g`;
+
+  try {
+    const response = await fetch(giphyUrl);
+    if (!response.ok) {
+      throw new Error(`Giphy API returned status ${response.status}`);
+    }
+    const data = await response.json();
+
+    if (data.data && data.data.length > 0) {
+      const randomIndex = Math.floor(Math.random() * data.data.length);
+      return data.data[randomIndex].images.fixed_height.url;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error(`Error in getRandomGiphyGif for type ${type}:`, error);
+    return null;
+  }
+}
+
 // function to find post by id
 async function findPost(id_value) {
   if (!id_value) return null;
@@ -161,12 +205,17 @@ async function findPost(id_value) {
 
 // helper function to create new posts
 async function createPost(email, post) {
+  const agreeGifUrl = await getRandomGiphyGif('agree');
+  const disagreeGifUrl = await getRandomGiphyGif('disagree');
+
   const newPost = {
     id: uuid.v4(),
     email: email,
     post: post,
     agree: [],
-    disagree: []
+    disagree: [],
+    agreeGifUrl: agreeGifUrl || "agree_1.gif", // Fallback to static GIF
+    disagreeGifUrl: disagreeGifUrl || "disagree_1.gif" // Fallback to static GIF
   }
 
   posts.push(newPost);

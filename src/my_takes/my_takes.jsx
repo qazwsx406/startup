@@ -92,20 +92,19 @@ export function MyTakes({ userInfo }) {
                                                     <div className="text-sm font-bold">{post.agree.length}</div>
                                                 </div>
                                             </div>
-                                            <img className="h-[65%] border-2 rounded-2xl" src={"agree_1.gif"} />
-                                            <div></div>
-                                        </div>
-                                        
-                                        <div className="flex flex-col justify-between items-center w-full p-3 rounded-br-md bg-[#ff4d4d]" onClick={() => handleVote(post.id, "disagree")}>
-                                            <div className="flex justify-between gap-5 w-full">
-                                                <div className="w-1 p-3"></div>
-                                                <div className="text-2xl font-semibold text-white drop-shadow-[2px_3px_0px_rgba(0,0,0,5)]">Naw</div>
-                                                <div className="flex items-center justify-center bg-white h-1 w-1 p-3 border-2 rounded-[100%]">
-                                                    <div className="text-sm font-bold">{post.disagree.length}</div>
-                                                </div>
-                                            </div>
-                                            <img className="h-[65%] border-2 rounded-2xl" src={"disagree_1.gif"} />
-                                            <div></div>
+                                                                                    <img className="h-[65%] border-2 rounded-2xl" src={post.agreeGifUrl} />
+                                                                                    <div></div>
+                                                                                </div>
+                                                                                
+                                                                                <div className="flex flex-col justify-between items-center w-full p-3 rounded-br-md bg-[#ff4d4d]" onClick={() => handleVote(post.id, "disagree")}>
+                                                                                    <div className="flex justify-between gap-5 w-full">
+                                                                                        <div className="w-1 p-3"></div>
+                                                                                        <div className="text-2xl font-semibold text-white drop-shadow-[2px_3px_0px_rgba(0,0,0,5)]">Naw</div>
+                                                                                        <div className="flex items-center justify-center bg-white h-1 w-1 p-3 border-2 rounded-[100%]">
+                                                                                            <div className="text-sm font-bold">{post.disagree.length}</div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <img className="h-[65%] border-2 rounded-2xl" src={post.disagreeGifUrl} />                                            <div></div>
                                         </div>
                                     </div>                        
                                 </div>
