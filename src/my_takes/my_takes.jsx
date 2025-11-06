@@ -31,14 +31,9 @@ export function MyTakes({ userInfo }) {
     };
 
     const getProfilePic = (postUserEmail) => {
-        // This is placeholder logic.
-        if (postUserEmail === "james@bond.com") {
-            return "/profile_2.svg";
-        } else if (postUserEmail === "luke@skywalker.com") {
-            return "/profile_3.svg";
-        } else {
-            return "/profile_1.svg";
-        }
+        console.log("Generating avatar for email:", postUserEmail);
+        // Generate DiceBear avatar URL using 'bots-neutral' style and user email as seed
+        return `https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${postUserEmail}`;
     };
 
     return (
@@ -75,7 +70,7 @@ export function MyTakes({ userInfo }) {
                                                 <div className="text-sm font-bold">{post.agree.length}</div>
                                             </div>
                                         </div>
-                                        <img className="h-[65%] border-2 rounded-2xl" src={"/agree_1.gif"} />
+                                        <img className="h-[65%] border-2 rounded-2xl" src={"agree_1.gif"} />
                                         <div></div>
                                     </div>
                                     
@@ -87,7 +82,7 @@ export function MyTakes({ userInfo }) {
                                                 <div className="text-sm font-bold">{post.disagree.length}</div>
                                             </div>
                                         </div>
-                                        <img className="h-[65%] border-2 rounded-2xl" src={"/disagree_1.gif"} />
+                                        <img className="h-[65%] border-2 rounded-2xl" src={"disagree_1.gif"} />
                                         <div></div>
                                     </div>
                                 </div>                        

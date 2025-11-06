@@ -53,3 +53,6 @@ Definitely getting used to using useState and useEffect.
 Had some struggle dealing with async functions, but starting to get a hang of it.  
 I should plan out how to send props to child elements before I build something.  
 Aviod prop drilling as much as possible.
+
+## Frontend/Backend Integration
+I learned how to connect a React frontend to a Node.js backend. This involved replacing `localStorage` with API calls, debugging CORS and Vite proxy issues, and fixing server startup errors (EADDRINUSE)
