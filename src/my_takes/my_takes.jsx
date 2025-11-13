@@ -25,7 +25,6 @@ export function MyTakes({ userInfo }) {
     const handleVote = async (postId, voteType) => {
         try {
             const updatedPost = await vote(postId, voteType);
-            // Replace the old post with the updated one in the state
             setMyPosts(myPosts.map(p => p.id === postId ? updatedPost : p));
         } catch (error) {
             console.error("Failed to vote:", error);
@@ -35,7 +34,6 @@ export function MyTakes({ userInfo }) {
     const handleDelete = async (postId) => {
         try {
             await deletePost(postId);
-            // Filter out the deleted post from the state
             setMyPosts(myPosts.filter(p => p.id !== postId));
         } catch (error) {
             console.error("Failed to delete post:", error);
@@ -44,7 +42,6 @@ export function MyTakes({ userInfo }) {
 
     const getProfilePic = (postUserEmail) => {
         console.log("Generating avatar for email:", postUserEmail);
-        // Generate DiceBear avatar URL using 'bots-neutral' style and user email as seed
         return `https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${postUserEmail}`;
     };
 
@@ -62,7 +59,7 @@ export function MyTakes({ userInfo }) {
                     </div>
                 ) : (
                     myPosts.map((post) => {
-                        return(
+                        return (
                             <div key={post.id} className="bg-white border-2 rounded-lg drop-shadow-[10px_10px_0.5px_rgba(0,0,0,0.3)]">
                                 <div className="flex flex-col gap-3 p-7">
                                     <div className="flex justify-between">
@@ -81,7 +78,7 @@ export function MyTakes({ userInfo }) {
                                         <h3 className="text-2xl text-center w-[80%]">{post.post}</h3>
                                     </div>
                                 </div>
-                                
+
                                 <div id="vote-button" className="border-t-2 rounded-b-lg">
                                     <div className="flex h-52 rounded-b-lg">
                                         <div className="flex flex-col justify-between items-center w-full border-r-2 p-3 rounded-bl-md bg-[#4dffbc]" onClick={() => handleVote(post.id, "agree")}>
@@ -92,21 +89,21 @@ export function MyTakes({ userInfo }) {
                                                     <div className="text-sm font-bold">{post.agree.length}</div>
                                                 </div>
                                             </div>
-                                                                                    <img className="h-[65%] border-2 rounded-2xl" src={post.agreeGifUrl} />
-                                                                                    <div></div>
-                                                                                </div>
-                                                                                
-                                                                                <div className="flex flex-col justify-between items-center w-full p-3 rounded-br-md bg-[#ff4d4d]" onClick={() => handleVote(post.id, "disagree")}>
-                                                                                    <div className="flex justify-between gap-5 w-full">
-                                                                                        <div className="w-1 p-3"></div>
-                                                                                        <div className="text-2xl font-semibold text-white drop-shadow-[2px_3px_0px_rgba(0,0,0,5)]">Naw</div>
-                                                                                        <div className="flex items-center justify-center bg-white h-1 w-1 p-3 border-2 rounded-[100%]">
-                                                                                            <div className="text-sm font-bold">{post.disagree.length}</div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <img className="h-[65%] border-2 rounded-2xl" src={post.disagreeGifUrl} />                                            <div></div>
+                                            <img className="h-[65%] border-2 rounded-2xl" src={post.agreeGifUrl} />
+                                            <div></div>
                                         </div>
-                                    </div>                        
+
+                                        <div className="flex flex-col justify-between items-center w-full p-3 rounded-br-md bg-[#ff4d4d]" onClick={() => handleVote(post.id, "disagree")}>
+                                            <div className="flex justify-between gap-5 w-full">
+                                                <div className="w-1 p-3"></div>
+                                                <div className="text-2xl font-semibold text-white drop-shadow-[2px_3px_0px_rgba(0,0,0,5)]">Naw</div>
+                                                <div className="flex items-center justify-center bg-white h-1 w-1 p-3 border-2 rounded-[100%]">
+                                                    <div className="text-sm font-bold">{post.disagree.length}</div>
+                                                </div>
+                                            </div>
+                                            <img className="h-[65%] border-2 rounded-2xl" src={post.disagreeGifUrl} />                                            <div></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         )

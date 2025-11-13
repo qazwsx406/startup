@@ -5,7 +5,6 @@ export function MainFeed({ userInfo }) {
     const [posts, setPosts] = React.useState([]);
     const [userInput, setUserInput] = React.useState("");
 
-    // Fetch posts from the backend when the component mounts
     React.useEffect(() => {
         async function loadPosts() {
             try {
@@ -26,9 +25,8 @@ export function MainFeed({ userInfo }) {
         try {
             const newPostData = { email: userInfo.email, post: userInput };
             await apiCreatePost(newPostData);
-            setUserInput(""); // Clear input field
+            setUserInput(""); 
 
-            // Refresh posts to show the new one
             const fetchedPosts = await getPosts();
             setPosts(fetchedPosts);
         } catch (error) {
@@ -39,7 +37,6 @@ export function MainFeed({ userInfo }) {
     const handleVote = async (postId, voteType) => {
         try {
             const updatedPost = await vote(postId, voteType);
-            // Replace the old post with the updated one in the state
             setPosts(posts.map(p => p.id === postId ? updatedPost : p));
         } catch (error) {
             console.error("Failed to vote:", error);
@@ -49,7 +46,6 @@ export function MainFeed({ userInfo }) {
     const handleDelete = async (postId) => {
         try {
             await deletePost(postId);
-            // Filter out the deleted post from the state
             setPosts(posts.filter(p => p.id !== postId));
         } catch (error) {
             console.error("Failed to delete post:", error);
@@ -58,7 +54,6 @@ export function MainFeed({ userInfo }) {
 
     const getProfilePic = (postUserEmail) => {
         console.log("Generating avatar for email:", postUserEmail);
-        // Generate DiceBear avatar URL using 'bots-neutral' style and user email as seed
         return `https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${postUserEmail}`;
     };
 

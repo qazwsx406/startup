@@ -1,18 +1,15 @@
 
 async function handleResponse(response) {
     if (!response.ok) {
-        // Check if the response has content before trying to parse it as JSON
         const errorText = await response.text();
         let errorData = {};
         try {
             errorData = JSON.parse(errorText);
         } catch (e) {
-            // If it's not JSON, use the raw text as the message
             errorData.msg = errorText || `HTTP error! status: ${response.status}`;
         }
         throw new Error(errorData.msg || `HTTP error! status: ${response.status}`);
     }
-    // For 204 No Content, there is no body to parse
     if (response.status === 204) {
         return null;
     }

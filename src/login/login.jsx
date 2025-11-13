@@ -1,13 +1,11 @@
 import React from 'react';
 import { AuthState } from './authState';
 import { useNavigate } from 'react-router-dom';
-import { login, signup } from '../api'; // Import from api.js
+import { login, signup } from '../api';
 
-// Note: UserInfo and UserSession are no longer needed here as we are not manually managing them in localStorage
-
-export function Login({ setAuthState, setUserInfo }) { // Removed unused userInfo prop
-    const [userName, setUserName] = React.useState(''); // Default to empty string
-    const [password, setPassword] = React.useState(''); // Default to empty string
+export function Login({ setAuthState, setUserInfo }) {
+    const [userName, setUserName] = React.useState('');
+    const [password, setPassword] = React.useState('');
     const [showError, setShowError] = React.useState(null);
     const navigate = useNavigate();
 
@@ -19,9 +17,7 @@ export function Login({ setAuthState, setUserInfo }) { // Removed unused userInf
 
         try {
             const user = await login(userName, password);
-            // The backend now sets a cookie for the session.
-            // We just need to update the application's auth state.
-            setUserInfo({ email: user.email }); // Store user's email
+            setUserInfo({ email: user.email });
             setAuthState(AuthState.Authenticated);
             navigate('/main_feed');
         } catch (error) {
@@ -37,7 +33,6 @@ export function Login({ setAuthState, setUserInfo }) { // Removed unused userInf
 
         try {
             const user = await signup(userName, password);
-            // The backend now sets a cookie for the session.
             setUserInfo({ email: user.email });
             setAuthState(AuthState.Authenticated);
             navigate('/main_feed');

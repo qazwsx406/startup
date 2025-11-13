@@ -38,30 +38,24 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
-// create user
 apiRouter.post('/auth/create', async (req, res) => {
-  console.log('Signup attempt for email:', req.body.email);
   const existingUser = await getUser(req.body.email);
-  console.log('Existing user found:', existingUser);
-
   if (existingUser) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
     const user = await createUser(req.body.email, req.body.password);
-    console.log('New user created:', user);
     setAuthCookie(res, user.token);
     res.send({ email: user.email });
   }
 });
 
-// GetAuth login an existing user
 apiRouter.post('/auth/login', async (req, res) => {
   const user = await getUser(req.body.email);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       const newToken = uuid.v4();
       const updatedUser = { ...user, token: newToken };
-      updatedUser._id = user._id; // Explicitly preserve _id
+      updatedUser._id = user._id;
       await updateUser(updatedUser);
       setAuthCookie(res, newToken);
       res.send({ email: user.email });
@@ -71,19 +65,17 @@ apiRouter.post('/auth/login', async (req, res) => {
   res.status(401).send({ msg: 'Unauthorized' });
 });
 
-// deleteAuth logout a user
 apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await getUserByToken(req.cookies[cookie]);
   if (user) {
     const updatedUser = { ...user, token: undefined };
-    updatedUser._id = user._id; // Explicitly preserve _id
+    updatedUser._id = user._id;
     await updateUser(updatedUser);
   }
   res.clearCookie(cookie);
   res.status(204).end();
 });
 
-// GetUser returns information about the authenticated user
 apiRouter.get('/user/me', verifyAuth, async (req, res) => {
     const user = await getUserByToken(req.cookies[cookie]);
     if (user) {
@@ -93,7 +85,6 @@ apiRouter.get('/user/me', verifyAuth, async (req, res) => {
     }
 });
 
-// create new post
 apiRouter.post('/posts', verifyAuth, async (req, res) => {
   const agreeGifUrl = await getRandomGiphyGif('agree');
   const disagreeGifUrl = await getRandomGiphyGif('disagree');
@@ -104,21 +95,19 @@ apiRouter.post('/posts', verifyAuth, async (req, res) => {
     post: req.body.post,
     agree: [],
     disagree: [],
-    agreeGifUrl: agreeGifUrl || "agree_1.gif", // Fallback to static GIF
-    disagreeGifUrl: disagreeGifUrl || "disagree_1.gif" // Fallback to static GIF
+    agreeGifUrl: agreeGifUrl || "agree_1.gif",
+    disagreeGifUrl: disagreeGifUrl || "disagree_1.gif"
   }
 
   await addPost(newPost);
   res.send(newPost);
 })
 
-// get all posts
 apiRouter.get('/posts', verifyAuth, async (req, res) => {
   const posts = await getPosts();
   res.send(posts.reverse());
 })
 
-// get post
 apiRouter.get('/posts/:id', verifyAuth, async (req, res) => {
   const post = await getPost(req.params.id);
   if (post) {
@@ -128,7 +117,6 @@ apiRouter.get('/posts/:id', verifyAuth, async (req, res) => {
   }
 })
 
-// Vote on a post
 apiRouter.post('/posts/:id/vote', verifyAuth, async (req, res) => {
     const post = await getPost(req.params.id);
     if (!post) {
@@ -137,7 +125,7 @@ apiRouter.post('/posts/:id/vote', verifyAuth, async (req, res) => {
 
     const user = await getUserByToken(req.cookies[cookie]);
     const userEmail = user.email;
-    const { voteType } = req.body; // 'agree' or 'disagree'
+    const { voteType } = req.body;
 
     if (voteType === 'agree') {
         if (post.agree.includes(userEmail)) {
@@ -149,6 +137,9 @@ apiRouter.post('/posts/:id/vote', verifyAuth, async (req, res) => {
     } else if (voteType === 'disagree') {
         if (post.disagree.includes(userEmail)) {
             post.disagree = post.disagree.filter(email => email !== userEmail);
+        } else {
+            post.disagree.push(userEmail);
+            post.agree = post.agree.filter(email => email !== userEmail);
         }
     } else {
         return res.status(400).send({ msg: 'Invalid vote type' });
@@ -158,7 +149,6 @@ apiRouter.post('/posts/:id/vote', verifyAuth, async (req, res) => {
     res.send(post);
 });
 
-// Delete a post
 apiRouter.delete('/posts/:id', verifyAuth, async (req, res) => {
     const post = await getPost(req.params.id);
     if (!post) {
@@ -175,7 +165,6 @@ apiRouter.delete('/posts/:id', verifyAuth, async (req, res) => {
     res.status(204).end();
 });
 
-// Giphy API endpoint
 apiRouter.get('/gifs/random', async (req, res) => {
   try {
     const { type } = req.query;
@@ -186,14 +175,12 @@ apiRouter.get('/gifs/random', async (req, res) => {
       res.status(404).send({ msg: 'No GIFs found for the given type.' });
     }
   } catch (error) {
-    console.error('Error fetching GIF from Giphy:', error);
     res.status(500).send({ msg: 'Failed to fetch GIF.', error: error.message });
   }
 });
 
 const giphyConfig = require('./giphyConfig.json');
 
-// Helper function to get a random Giphy GIF
 async function getRandomGiphyGif(type) {
   const giphyApiKey = giphyConfig.apiKey;
   const searchTerm = type === 'agree' ? 'agree' : 'disagree';
@@ -213,12 +200,10 @@ async function getRandomGiphyGif(type) {
       return null;
     }
   } catch (error) {
-    console.error(`Error in getRandomGiphyGif for type ${type}:`, error);
     return null;
   }
 }
 
-// setAuthCookie in the HTTP response
 function setAuthCookie(res, authToken) {
   res.cookie(cookie, authToken, {
     secure: true,

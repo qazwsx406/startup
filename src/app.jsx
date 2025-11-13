@@ -13,7 +13,6 @@ export default function App() {
     const [authState, setAuthState] = React.useState(AuthState.Unknown);
 
     React.useEffect(() => {
-        // Check if the user is already authenticated on page load
         (async function checkUser() {
             try {
                 const user = await getCurrentUser();
@@ -31,18 +30,17 @@ export default function App() {
         setAuthState(AuthState.Unauthenticated);
     }
 
-    // Display a loading indicator or nothing while auth state is unknown
     if (authState === AuthState.Unknown) {
         return null;
     }
-    
+
     return (
         <BrowserRouter>
             <div className='main_container'>
                 <header className="flex justify-between items-center px-5 h-16 border-y-2 bg-[#ff4d4d]">
                     <div className="flex items-center gap-10">
-                        <NavLink 
-                            className="font-bold text-2xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,5)]" 
+                        <NavLink
+                            className="font-bold text-2xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,5)]"
                             to={authState === AuthState.Authenticated ? "/main_feed" : "/"}
                         >
                             HotTakes
@@ -51,10 +49,10 @@ export default function App() {
                             {authState === AuthState.Authenticated && (
                                 <menu className="flex gap-2">
                                     <li>
-                                        <NavLink 
-                                            className={({ isActive }) => 
-                                                isActive 
-                                                    ? "text-white underline font-medium" 
+                                        <NavLink
+                                            className={({ isActive }) =>
+                                                isActive
+                                                    ? "text-white underline font-medium"
                                                     : "text-white font-medium"
                                             }
                                             to="main_feed"
@@ -63,10 +61,10 @@ export default function App() {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink 
-                                            className={({ isActive }) => 
-                                                isActive 
-                                                    ? "text-white underline font-medium" 
+                                        <NavLink
+                                            className={({ isActive }) =>
+                                                isActive
+                                                    ? "text-white underline font-medium"
                                                     : "text-white font-medium"
                                             }
                                             to="my_takes"
@@ -78,7 +76,7 @@ export default function App() {
                             )}
                         </nav>
                     </div>
-                    
+
                     <div>
                         {authState === AuthState.Authenticated && (
                             <NavLink className="bg-[#D9D9D9] border-2 text-black w-full rounded-lg px-4 py-0.5 font-medium" to="/" onClick={handleLogout}>Logout</NavLink>
@@ -87,31 +85,31 @@ export default function App() {
                 </header>
 
                 <Routes>
-                    <Route 
-                        path='/' 
-                        element={<Login 
-                            setAuthState={setAuthState} 
-                            setUserInfo={setUserInfo} 
+                    <Route
+                        path='/'
+                        element={<Login
+                            setAuthState={setAuthState}
+                            setUserInfo={setUserInfo}
                         />}
-                        exact 
+                        exact
                     />
 
-                    <Route 
-                        path='/main_feed' 
+                    <Route
+                        path='/main_feed'
                         element={
                             <ProtectedRoute authState={authState}>
                                 <MainFeed userInfo={userInfo} />
                             </ProtectedRoute>
-                        } 
+                        }
                     />
 
-                    <Route 
-                        path='/my_takes' 
+                    <Route
+                        path='/my_takes'
                         element={
                             <ProtectedRoute authState={authState}>
                                 <MyTakes userInfo={userInfo} />
                             </ProtectedRoute>
-                        } 
+                        }
                     />
 
                     <Route path='*' element={<NotFound />} />
@@ -123,7 +121,7 @@ export default function App() {
                     </div>
                     <div className="footer-right">
                         <a className="text-white font-semibold drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]" href="https://github.com/qazwsx406/startup">GitHub</a>
-                    </div>            
+                    </div>
                 </footer>
             </div>
         </BrowserRouter>
