@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+service/node_modules
 /dist
 .env
 service/dbConfig.json
