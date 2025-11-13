@@ -2,3 +2,4 @@
 node_modules
 service/out.log
 service/err.log
+service/dbConfig.json
