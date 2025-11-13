@@ -14,6 +14,7 @@ const {
   getPosts,
   getPost,
   updatePost,
+  updateUser,
   deletePost,
 } = require('./database.js');
 

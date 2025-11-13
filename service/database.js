@@ -56,9 +56,12 @@ async function updatePost(post) {
 }
 
 async function updateUser(user) {
+    console.log('Updating user:', user);
     if (user._id) {
+        console.log('Updating by _id:', user._id);
         await userCollection.updateOne({ _id: user._id }, { $set: user });
     } else {
+        console.log('Updating by email:', user.email);
         await userCollection.updateOne({ email: user.email }, { $set: user });
     }
 }
