@@ -56,3 +56,6 @@ Aviod prop drilling as much as possible.
 
 ## Frontend/Backend Integration
 I learned how to connect a React frontend to a Node.js backend. This involved replacing `localStorage` with API calls, debugging CORS and Vite proxy issues, and fixing server startup errors (EADDRINUSE)
+
+## DB Integration
+First time using NoSQL. It was surprising to learn how easy it was to integrate it to the codebase from the get go.
