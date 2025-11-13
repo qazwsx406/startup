@@ -58,9 +58,11 @@ apiRouter.post('/auth/login', async (req, res) => {
   const user = await getUser(req.body.email);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
-      user.token = uuid.v4();
-      await updatePost(user);
-      setAuthCookie(res, user.token);
+      const newToken = uuid.v4();
+      const updatedUser = { ...user, token: newToken };
+      updatedUser._id = user._id; // Explicitly preserve _id
+      await updateUser(updatedUser);
+      setAuthCookie(res, newToken);
       res.send({ email: user.email });
       return;
     }
@@ -72,8 +74,9 @@ apiRouter.post('/auth/login', async (req, res) => {
 apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await getUserByToken(req.cookies[cookie]);
   if (user) {
-    delete user.token;
-    await updatePost(user);
+    const updatedUser = { ...user, token: undefined };
+    updatedUser._id = user._id; // Explicitly preserve _id
+    await updateUser(updatedUser);
   }
   res.clearCookie(cookie);
   res.status(204).end();
@@ -187,9 +190,11 @@ apiRouter.get('/gifs/random', async (req, res) => {
   }
 });
 
+const giphyConfig = require('./giphyConfig.json');
+
 // Helper function to get a random Giphy GIF
 async function getRandomGiphyGif(type) {
-  const giphyApiKey = '';
+  const giphyApiKey = giphyConfig.apiKey;
   const searchTerm = type === 'agree' ? 'agree' : 'disagree';
   const giphyUrl = `https://api.giphy.com/v1/gifs/search?api_key=${giphyApiKey}&q=${searchTerm}&limit=50&rating=g`;
 

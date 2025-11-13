@@ -55,6 +55,14 @@ async function updatePost(post) {
     await postCollection.updateOne({ id: post.id }, { $set: post });
 }
 
+async function updateUser(user) {
+    if (user._id) {
+        await userCollection.updateOne({ _id: user._id }, { $set: user });
+    } else {
+        await userCollection.updateOne({ email: user.email }, { $set: user });
+    }
+}
+
 async function deletePost(id) {
     await postCollection.deleteOne({ id: id });
 }
@@ -67,5 +75,6 @@ module.exports = {
   getPosts,
   getPost,
   updatePost,
+  updateUser,
   deletePost,
 };

@@ -1,5 +1,6 @@
 # dependencies
-node_modules
-service/out.log
-service/err.log
+/node_modules
+/dist
+.env
 service/dbConfig.json
+service/giphyConfig.json

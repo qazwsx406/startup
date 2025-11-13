@@ -15,8 +15,10 @@ export function MainFeed({ userInfo }) {
                 console.error("Failed to fetch posts:", error);
             }
         }
-        loadPosts();
-    }, []);
+        if (userInfo) {
+            loadPosts();
+        }
+    }, [userInfo]);
 
     const handleCreatePost = async () => {
         if (userInput.trim() === "") return;
