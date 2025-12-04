@@ -22,6 +22,26 @@ export function MyTakes({ userInfo }) {
         }
     }, [userInfo]);
 
+    React.useEffect(() => {
+        const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+        const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+        socket.onopen = () => {
+            console.log('WebSocket connected (My Takes)');
+        };
+
+        socket.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+            if (msg.type === 'voteUpdate') {
+                setMyPosts(prevPosts => prevPosts.map(p => p.id === msg.value.id ? msg.value : p));
+            }
+        };
+
+        return () => {
+            socket.close();
+        };
+    }, []);
+
     const handleVote = async (postId, voteType) => {
         try {
             const updatedPost = await vote(postId, voteType);
