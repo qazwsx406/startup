@@ -140,7 +140,8 @@ export default function App() {
                     <div className="footer-left">
                         <a className="text-white drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]">Joonhee Shin</a>
                     </div>
-                    <div className="text-white font-medium drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]">
+                    <div className="flex items-center gap-2 text-white font-medium drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]">
+                        <div className="w-3 h-3 bg-[#4dffbc] rounded-full border border-black"></div>
                         Active Users: {userCount}
                     </div>
                     <div className="footer-right">
