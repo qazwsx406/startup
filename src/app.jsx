@@ -33,6 +33,13 @@ export default function App() {
             console.log('App WebSocket connected');
         };
 
+        socket.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+            if (msg.type === 'userCount') {
+                setUserCount(msg.value);
+            }
+        };
+
         return () => {
             socket.close();
         };
