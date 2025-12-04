@@ -26,24 +26,26 @@ export default function App() {
     }, []);
 
     React.useEffect(() => {
-        const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-        const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+        if (authState === AuthState.Authenticated) {
+            const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+            const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 
-        socket.onopen = () => {
-            console.log('App WebSocket connected');
-        };
+            socket.onopen = () => {
+                console.log('App WebSocket connected');
+            };
 
-        socket.onmessage = (event) => {
-            const msg = JSON.parse(event.data);
-            if (msg.type === 'userCount') {
-                setUserCount(msg.value);
-            }
-        };
+            socket.onmessage = (event) => {
+                const msg = JSON.parse(event.data);
+                if (msg.type === 'userCount') {
+                    setUserCount(msg.value);
+                }
+            };
 
-        return () => {
-            socket.close();
-        };
-    }, []);
+            return () => {
+                socket.close();
+            };
+        }
+    }, [authState]);
 
     async function handleLogout() {
         await logout();
@@ -140,10 +142,12 @@ export default function App() {
                     <div className="footer-left">
                         <a className="text-white drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]">Joonhee Shin</a>
                     </div>
-                    <div className="flex items-center gap-2 text-white font-medium drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]">
-                        <div className="w-3 h-3 bg-[#4dffbc] rounded-full border border-black"></div>
-                        Active Users: {userCount}
-                    </div>
+                    {authState === AuthState.Authenticated && (
+                        <div className="flex items-center gap-2 text-white font-medium drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]">
+                            <div className="w-3 h-3 bg-[#4dffbc] rounded-full border border-black"></div>
+                            Active Users: {userCount}
+                        </div>
+                    )}
                     <div className="footer-right">
                         <a className="text-white font-semibold drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]" href="https://github.com/qazwsx406/startup">GitHub</a>
                     </div>

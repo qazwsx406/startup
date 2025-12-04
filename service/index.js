@@ -221,17 +221,47 @@ const httpService = app.listen(port, () => {
 
 const wss = new WebSocketServer({ server: httpService });
 
-wss.on('connection', (ws) => {
-  broadcastMessage({ type: 'userCount', value: wss.clients.size });
+wss.on('connection', async (ws, req) => {
+  const cookieString = req.headers.cookie;
+  let user = null;
+
+  if (cookieString) {
+    const cookies = cookieString.split(';').reduce((acc, cookie) => {
+      const [key, value] = cookie.trim().split('=');
+      acc[key] = value;
+      return acc;
+    }, {});
+
+    if (cookies[cookie]) {
+      user = await getUserByToken(cookies[cookie]);
+    }
+  }
+
+  if (user) {
+    ws.user = user;
+    broadcastUserCount();
+  }
 
   ws.on('message', (message) => {
     console.log(`Received message => ${message}`);
   });
 
   ws.on('close', () => {
-    broadcastMessage({ type: 'userCount', value: wss.clients.size });
+    if (ws.user) {
+      broadcastUserCount();
+    }
   });
 });
+
+function broadcastUserCount() {
+  const activeUsers = new Set();
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocketServer.OPEN && client.user) {
+      activeUsers.add(client.user.email);
+    }
+  });
+  broadcastMessage({ type: 'userCount', value: activeUsers.size });
+}
 
 function broadcastMessage(data) {
   wss.clients.forEach((client) => {
