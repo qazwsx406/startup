@@ -11,6 +11,7 @@ import { getCurrentUser, logout } from './api';
 export default function App() {
     const [userInfo, setUserInfo] = React.useState(null);
     const [authState, setAuthState] = React.useState(AuthState.Unknown);
+    const [userCount, setUserCount] = React.useState(0);
 
     React.useEffect(() => {
         (async function checkUser() {
@@ -118,6 +119,9 @@ export default function App() {
                 <footer className="flex justify-between border-y-2 px-5 py-3 bg-[#FF4D4D]">
                     <div className="footer-left">
                         <a className="text-white drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]">Joonhee Shin</a>
+                    </div>
+                    <div className="text-white font-medium drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]">
+                        Active Users: {userCount}
                     </div>
                     <div className="footer-right">
                         <a className="text-white font-semibold drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,5)]" href="https://github.com/qazwsx406/startup">GitHub</a>
