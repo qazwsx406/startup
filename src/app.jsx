@@ -25,6 +25,19 @@ export default function App() {
         })();
     }, []);
 
+    React.useEffect(() => {
+        const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+        const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+        socket.onopen = () => {
+            console.log('App WebSocket connected');
+        };
+
+        return () => {
+            socket.close();
+        };
+    }, []);
+
     async function handleLogout() {
         await logout();
         setUserInfo(null);
