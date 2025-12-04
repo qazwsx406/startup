@@ -24,6 +24,7 @@ function getUser(email) {
 }
 
 function getUserByToken(token) {
+  if (!token) return null;
   return userCollection.findOne({ token: token });
 }
 
