@@ -1,6 +1,6 @@
 import React from 'react';
 import './app.css';
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes, Navigate } from 'react-router-dom';
 import { Login } from './login/login';
 import { MainFeed } from './main_feed/main_feed';
 import { MyTakes } from './my_takes/my_takes';
@@ -110,10 +110,16 @@ export default function App() {
                 <Routes>
                     <Route
                         path='/'
-                        element={<Login
-                            setAuthState={setAuthState}
-                            setUserInfo={setUserInfo}
-                        />}
+                        element={
+                            authState === AuthState.Authenticated ? (
+                                <Navigate to="/main_feed" />
+                            ) : (
+                                <Login
+                                    setAuthState={setAuthState}
+                                    setUserInfo={setUserInfo}
+                                />
+                            )
+                        }
                         exact
                     />
 

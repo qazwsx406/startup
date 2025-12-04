@@ -73,7 +73,11 @@ apiRouter.delete('/auth/logout', async (req, res) => {
     updatedUser._id = user._id;
     await updateUser(updatedUser);
   }
-  res.clearCookie(cookie);
+  res.clearCookie(cookie, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
   res.status(204).end();
 });
 
