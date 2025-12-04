@@ -59,3 +59,6 @@ I learned how to connect a React frontend to a Node.js backend. This involved re
 
 ## DB Integration
 First time using NoSQL. It was surprising to learn how easy it was to integrate it to the codebase from the get go.
+
+## Websocket
+I got stuck with implementing the acitve user counter, but eventually was able to solve it. I was using a wrong class to check for user login status.
