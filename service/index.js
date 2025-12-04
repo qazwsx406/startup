@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const express = require('express');
 const cors = require('cors');
+const { WebSocketServer } = require('ws');
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 const cookie = 'authToken';
@@ -100,6 +101,7 @@ apiRouter.post('/posts', verifyAuth, async (req, res) => {
   }
 
   await addPost(newPost);
+  broadcastMessage({ type: 'newPost', value: newPost });
   res.send(newPost);
 })
 
@@ -146,6 +148,7 @@ apiRouter.post('/posts/:id/vote', verifyAuth, async (req, res) => {
     }
 
     await updatePost(post);
+    broadcastMessage({ type: 'voteUpdate', value: post });
     res.send(post);
 });
 
@@ -212,6 +215,22 @@ function setAuthCookie(res, authToken) {
   });
 }
 
-app.listen(port, () => {
+const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+const wss = new WebSocketServer({ server: httpService });
+
+wss.on('connection', (ws) => {
+  ws.on('message', (message) => {
+    console.log(`Received message => ${message}`);
+  });
+});
+
+function broadcastMessage(data) {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocketServer.OPEN || client.readyState === 1) { // 1 is OPEN
+      client.send(JSON.stringify(data));
+    }
+  });
+}
