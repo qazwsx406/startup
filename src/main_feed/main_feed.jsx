@@ -19,6 +19,28 @@ export function MainFeed({ userInfo }) {
         }
     }, [userInfo]);
 
+    React.useEffect(() => {
+        const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+        const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+        socket.onopen = () => {
+            console.log('WebSocket connected');
+        };
+
+        socket.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+            if (msg.type === 'newPost') {
+                setPosts(prevPosts => [msg.value, ...prevPosts]);
+            } else if (msg.type === 'voteUpdate') {
+                setPosts(prevPosts => prevPosts.map(p => p.id === msg.value.id ? msg.value : p));
+            }
+        };
+
+        return () => {
+            socket.close();
+        };
+    }, []);
+
     const handleCreatePost = async () => {
         if (userInput.trim() === "") return;
 
