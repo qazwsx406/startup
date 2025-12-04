@@ -222,6 +222,8 @@ const httpService = app.listen(port, () => {
 const wss = new WebSocketServer({ server: httpService });
 
 wss.on('connection', (ws) => {
+  broadcastMessage({ type: 'userCount', value: wss.clients.size });
+
   ws.on('message', (message) => {
     console.log(`Received message => ${message}`);
   });
