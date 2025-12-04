@@ -74,7 +74,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
     await updateUser(updatedUser);
   }
   res.clearCookie(cookie, {
-    secure: true,
+    secure: false,
     httpOnly: true,
     sameSite: 'strict',
   });
@@ -213,7 +213,7 @@ async function getRandomGiphyGif(type) {
 
 function setAuthCookie(res, authToken) {
   res.cookie(cookie, authToken, {
-    secure: true,
+    secure: false,
     httpOnly: true,
     sameSite: 'strict',
   });
@@ -244,6 +244,8 @@ wss.on('connection', async (ws, req) => {
   if (user) {
     ws.user = user;
     broadcastUserCount();
+  } else {
+    console.log('WebSocket connection attempt without valid user/cookie');
   }
 
   ws.on('message', (message) => {
