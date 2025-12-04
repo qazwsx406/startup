@@ -164,7 +164,7 @@ apiRouter.delete('/posts/:id', verifyAuth, async (req, res) => {
     }
 
     await deletePost(req.params.id);
-
+    broadcastMessage({ type: 'postDeleted', value: req.params.id });
     res.status(204).end();
 });
 

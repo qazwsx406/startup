@@ -33,6 +33,8 @@ export function MainFeed({ userInfo }) {
                 setPosts(prevPosts => [msg.value, ...prevPosts]);
             } else if (msg.type === 'voteUpdate') {
                 setPosts(prevPosts => prevPosts.map(p => p.id === msg.value.id ? msg.value : p));
+            } else if (msg.type === 'postDeleted') {
+                setPosts(prevPosts => prevPosts.filter(p => p.id !== msg.value));
             }
         };
 

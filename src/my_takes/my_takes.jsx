@@ -34,6 +34,8 @@ export function MyTakes({ userInfo }) {
             const msg = JSON.parse(event.data);
             if (msg.type === 'voteUpdate') {
                 setMyPosts(prevPosts => prevPosts.map(p => p.id === msg.value.id ? msg.value : p));
+            } else if (msg.type === 'postDeleted') {
+                setMyPosts(prevPosts => prevPosts.filter(p => p.id !== msg.value));
             }
         };
 
