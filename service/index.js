@@ -227,6 +227,10 @@ wss.on('connection', (ws) => {
   ws.on('message', (message) => {
     console.log(`Received message => ${message}`);
   });
+
+  ws.on('close', () => {
+    broadcastMessage({ type: 'userCount', value: wss.clients.size });
+  });
 });
 
 function broadcastMessage(data) {
