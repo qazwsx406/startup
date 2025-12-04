@@ -26,15 +26,27 @@ export default function App() {
     }, []);
 
     React.useEffect(() => {
+        console.log('AuthState changed:', authState);
         if (authState === AuthState.Authenticated) {
             const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-            const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+            const wsUrl = `${protocol}://${window.location.host}/ws`;
+            console.log('Connecting to WebSocket at:', wsUrl);
+            const socket = new WebSocket(wsUrl);
 
             socket.onopen = () => {
                 console.log('App WebSocket connected');
             };
 
+            socket.onerror = (error) => {
+                console.error('App WebSocket error:', error);
+            };
+
+            socket.onclose = (event) => {
+                console.log('App WebSocket closed:', event.code, event.reason);
+            };
+
             socket.onmessage = (event) => {
+                console.log('App WebSocket message received:', event.data);
                 const msg = JSON.parse(event.data);
                 if (msg.type === 'userCount') {
                     setUserCount(msg.value);
@@ -42,6 +54,7 @@ export default function App() {
             };
 
             return () => {
+                console.log('Closing App WebSocket');
                 socket.close();
             };
         }

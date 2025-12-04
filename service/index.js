@@ -223,6 +223,10 @@ const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
+httpService.on('upgrade', (request, socket, head) => {
+  console.log('HTTP Upgrade request received:', request.url);
+});
+
 const wss = new WebSocketServer({ server: httpService });
 
 wss.on('connection', async (ws, req) => {
@@ -231,28 +235,38 @@ wss.on('connection', async (ws, req) => {
 
   if (cookieString) {
     const cookies = cookieString.split(';').reduce((acc, cookie) => {
-      const [key, value] = cookie.trim().split('=');
-      acc[key] = value;
+      const [key, ...v] = cookie.trim().split('=');
+      acc[key] = v.join('=');
       return acc;
     }, {});
 
     if (cookies[cookie]) {
-      user = await getUserByToken(cookies[cookie]);
+      try {
+        user = await getUserByToken(cookies[cookie]);
+      } catch (error) {
+        console.error('Error getting user by token:', error);
+      }
     }
   }
 
   if (user) {
     ws.user = user;
+    console.log(`Connection established for user: ${user.email}`);
     broadcastUserCount();
   } else {
-    console.log('WebSocket connection attempt without valid user/cookie');
+    console.log('WebSocket connection attempt without valid user/cookie. Headers:', req.headers);
   }
 
   ws.on('message', (message) => {
     console.log(`Received message => ${message}`);
   });
 
+  ws.on('error', (error) => {
+    console.error('WebSocket error:', error);
+  });
+
   ws.on('close', () => {
+    console.log(`Connection closed. User: ${ws.user ? ws.user.email : 'unknown'}`);
     if (ws.user) {
       broadcastUserCount();
     }
@@ -262,16 +276,17 @@ wss.on('connection', async (ws, req) => {
 function broadcastUserCount() {
   const activeUsers = new Set();
   wss.clients.forEach((client) => {
-    if (client.readyState === WebSocketServer.OPEN && client.user) {
+    if (client.readyState === 1 && client.user) { // 1 is OPEN
       activeUsers.add(client.user.email);
     }
   });
+  console.log(`Broadcasting user count: ${activeUsers.size}`);
   broadcastMessage({ type: 'userCount', value: activeUsers.size });
 }
 
 function broadcastMessage(data) {
   wss.clients.forEach((client) => {
-    if (client.readyState === WebSocketServer.OPEN || client.readyState === 1) { // 1 is OPEN
+    if (client.readyState === 1) { // 1 is OPEN
       client.send(JSON.stringify(data));
     }
   });
